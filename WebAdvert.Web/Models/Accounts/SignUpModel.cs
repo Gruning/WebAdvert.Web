@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,5 +14,14 @@ namespace WebAdvert.Web.Models.Accounts
         [EmailAddress]
         [Display(Name ="Email")]
         public string Email { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+        [StringLength(6,ErrorMessage ="Password must be at least 6 characters long")]
+        [Display(Name= "Password")]
+        public string Password { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+        [Compare("Password",ErrorMessage ="password and confirmation don't match")]
+        public string ConfirmPassword { get; set; }
     }
 }
