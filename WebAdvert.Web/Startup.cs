@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +26,24 @@ namespace WebAdvert.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.Configure<CookiePolicyOptions>(options => {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            services.AddCognitoIdentity(config=> { 
+                config.Password = new PasswordOptions
+                {
+                    RequireDigit  =false,
+                    RequiredLength = 6,
+                    RequiredUniqueChars = false,
+                    RequireLowercase = false,
+                    RequireNonAlphanumeric = false,
+                    RequireUppercase = false
+
+                }
+            });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +59,9 @@ namespace WebAdvert.Web
             }
             app.UseStaticFiles();
 
+            app.UseCookiePolicy();
+            app.UseAuthentication();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -48,6 +72,7 @@ namespace WebAdvert.Web
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

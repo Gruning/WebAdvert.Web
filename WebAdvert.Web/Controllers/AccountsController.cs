@@ -6,9 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAdvert.Web.Controllers
 {
-    public class AccountsController1 : Controller
+    public class AccountsController : Controller
     {
-        public IActionResult Index()
+
+        public async Task<IActionResult> SignUp()
         {
             return View();
         }
