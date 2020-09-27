@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebAdvert.Web.Models.Accounts;
 
 namespace WebAdvert.Web.Controllers
 {
@@ -10,6 +11,12 @@ namespace WebAdvert.Web.Controllers
     {
 
         public async Task<IActionResult> SignUp()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult>SignUp(SignUpModel model)
         {
             return View();
         }
