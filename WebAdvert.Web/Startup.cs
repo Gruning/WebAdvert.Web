@@ -31,17 +31,17 @@ namespace WebAdvert.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddCognitoIdentity(config=> { 
+            services.AddCognitoIdentity(config=> {
                 config.Password = new PasswordOptions
                 {
-                    RequireDigit  =false,
+                    RequireDigit = false,
                     RequiredLength = 6,
-                    RequiredUniqueChars = false,
+                    RequiredUniqueChars = 0,
                     RequireLowercase = false,
                     RequireNonAlphanumeric = false,
                     RequireUppercase = false
 
-                }
+                };
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
